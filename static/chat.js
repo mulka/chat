@@ -27,6 +27,8 @@ $(document).ready(function() {
         }
     });
     $("#message").select();
+    var el = $("#inbox");
+    el.scrollTop(el[0].scrollHeight);
     updater.poll();
 });
 
@@ -128,8 +130,12 @@ var updater = {
         var existing = $("#m" + message.id);
         if (existing.length > 0) return;
         var node = $(message.html);
-        node.hide();
-        $("#inbox").append(node);
-        node.slideDown();
+        var el = $("#inbox");
+        var scrolledToBottom = el[0].scrollHeight - el.scrollTop() < el.outerHeight() + 10;
+        el.append(node);
+        if (scrolledToBottom){
+            el.scrollTop(el[0].scrollHeight);
+        }
+
     }
 };
